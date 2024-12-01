@@ -55,21 +55,18 @@ impl Parse for DeprecationMacroInput {
                 "sunset" => {
                     input.parse::<Token![=]>()?;
                     let sunset_raw = input.parse::<LitStr>()?;
+                    let sunset_ts = DateTime::parse_from_rfc3339(&sunset_raw.value()).map_err(|_| {
+                        syn::Error::new(sunset_raw.span(), "Sunset timestamp is not a valid ISO8601 timestamp")
+                    })?;
 
-                    let sunset_epoch: i64 = DateTime::parse_from_rfc3339(&sunset_raw.value())
-                        .map_err(|_| {
-                            syn::Error::new(sunset_raw.span(), "Sunset timestamp is not a valid ISO8601 timestamp")
-                        })?
-                        .timestamp();
-
-                    if sunset_epoch < timestamp {
+                    if sunset_ts.timestamp() < timestamp {
                         return Err(syn::Error::new(
                             sunset_raw.span(),
                             "Sunset timestamp must not be earlier than deprecation timestamp",
                         ));
                     }
 
-                    sunset = Some(sunset_raw.value());
+                    sunset = Some(sunset_ts.format("%a, %d %b %Y %H:%M:%S GMT").to_string());
                 }
                 _ => {
                     return Err(syn::Error::new(

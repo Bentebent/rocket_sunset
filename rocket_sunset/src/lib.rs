@@ -25,13 +25,6 @@ impl<T: for<'r> Responder<'r, 'static>> DeprecatedResponder<T> {
             sunset: sunset.map(|s| Header::new("sunset", s.to_owned())),
         }
     }
-
-    pub fn add_link(&mut self, link: &'static str) {
-        self.link = Some(Header::new(
-            "Link",
-            format!(r#"<{}>; rel="deprecation"; type="text/html""#, link),
-        ));
-    }
 }
 
 impl<'r, 'o: 'r, T> Responder<'r, 'o> for DeprecatedResponder<T>
@@ -40,7 +33,7 @@ where
 {
     fn respond_to(self, req: &'r Request<'_>) -> response::Result<'o> {
         self.inner.respond_to(req).map(|mut response| {
-            response.set_header(Header::new("Deprecation", format!("@{}", self.deprecation)));
+            response.set_header(self.deprecation);
             if let Some(header) = self.link {
                 response.set_header(header);
             }
