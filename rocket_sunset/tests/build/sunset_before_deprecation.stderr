@@ -1,0 +1,27 @@
+error: Sunset timestamp must not be earlier than deprecation timestamp
+  --> tests/build/sunset_before_deprecation.rs:11:48
+   |
+11 | #[deprecation("2024-12-31T23:59:59Z", sunset = "2024-01-01T00:00:00Z")]
+   |                                                ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `DeprecatedResponder`
+ --> tests/build/sunset_before_deprecation.rs:7:5
+  |
+7 |     DeprecatedResponder,
+  |     ^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+error[E0423]: expected function, found struct `index`
+  --> tests/build/sunset_before_deprecation.rs:12:19
+   |
+10 | #[get("/")]
+   | -----------
+   | |
+   | `index` defined here
+   | in this procedural macro expansion
+11 | #[deprecation("2024-12-31T23:59:59Z", sunset = "2024-01-01T00:00:00Z")]
+12 | pub fn index() -> &'static str {
+   |                   ^ help: use struct literal syntax instead: `index {}`
+   |
+   = note: this error originates in the attribute macro `get` (in Nightly builds, run with -Z macro-backtrace for more info)

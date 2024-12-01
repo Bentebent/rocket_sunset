@@ -28,9 +28,16 @@ struct DeprecationMacroInput {
 
 impl Parse for DeprecationMacroInput {
     fn parse(input: ParseStream) -> Result<Self> {
-        let timestamp: LitStr = input.parse()?;
+        let timestamp: LitStr = input
+            .parse()
+            .map_err(|e| syn::Error::new(input.span(), format!("Missing or invalid deprecation timestamp, {}", e)))?;
         let timestamp: i64 = DateTime::parse_from_rfc3339(&timestamp.value())
-            .map_err(|e| syn::Error::new(timestamp.span(), e))?
+            .map_err(|_| {
+                syn::Error::new(
+                    timestamp.span(),
+                    "Deprecation timestamp is not a valid ISO8601 timestamp",
+                )
+            })?
             .timestamp();
 
         let mut link = None;
@@ -50,13 +57,15 @@ impl Parse for DeprecationMacroInput {
                     let sunset_raw = input.parse::<LitStr>()?;
 
                     let sunset_epoch: i64 = DateTime::parse_from_rfc3339(&sunset_raw.value())
-                        .map_err(|e| syn::Error::new(sunset_raw.span(), e))?
+                        .map_err(|_| {
+                            syn::Error::new(sunset_raw.span(), "Sunset timestamp is not a valid ISO8601 timestamp")
+                        })?
                         .timestamp();
 
                     if sunset_epoch < timestamp {
                         return Err(syn::Error::new(
                             sunset_raw.span(),
-                            "Sunset must not be earlier than deprecation timestamp",
+                            "Sunset timestamp must not be earlier than deprecation timestamp",
                         ));
                     }
 
