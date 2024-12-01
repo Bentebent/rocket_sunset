@@ -22,3 +22,18 @@ impl<T: ToTokens> ToTokens for QuoteOption<T> {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_quote_option() {
+        let option = QuoteOption(Some(42));
+        let tokens = quote! { #option };
+        assert_eq!(tokens.to_string(), ":: std :: option :: Option :: Some (42i32)");
+
+        let option: QuoteOption<i32> = QuoteOption(None);
+        let tokens = quote! { #option };
+        assert_eq!(tokens.to_string(), ":: std :: option :: Option :: None");
+    }
+}
