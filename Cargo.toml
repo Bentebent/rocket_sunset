@@ -1,0 +1,17 @@
+[package]
+name = "rocket_sunset"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "client"
+path = "src/main.rs"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+name = "rocket_sunset"
+path = "src/lib.rs"
+
+[dependencies]
+rocket = { version = "0.5.1", features = ["json"] }
+sunset_macro = { path = "sunset_macro" }
