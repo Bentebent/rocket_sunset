@@ -6,7 +6,7 @@ description = "A procedural macro crate for Rocket that provides functionality f
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/Bentebent/rocket_sunset"
 readme = "README.md"
-keywords = ["rocket", "proc-macro", "sunset", "deprecation", "http", "header"]
+keywords = ["rocket", "proc-macro", "deprecation", "http", "header"]
 categories = ["web-programming", "rocket", "http", "proc-macro"]
 
 [lib]
