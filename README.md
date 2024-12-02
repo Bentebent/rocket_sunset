@@ -9,7 +9,7 @@ Add this crate to your `Cargo.toml` alongside Rocket 0.5:
 ```toml
 [dependencies]
 rocket = "0.5.1"
-sunset_macro = "0.1.0"
+rocket_sunset = "0.1.0"
 ```
 
 Define your endpoints as usual in Rocket. Apply the macro `deprecation`with the relevant information.

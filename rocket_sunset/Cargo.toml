@@ -14,4 +14,4 @@ trybuild = "1.0.41"
 
 [dependencies]
 rocket = { version = "0.5.1", features = ["json"] }
-sunset_macro = { version = "0.1.0", path = "../sunset_macro" }
+rocket_sunset_macro = { version = "0.1.0", path = "../rocket_sunset_macro" }
