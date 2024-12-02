@@ -21,10 +21,13 @@ jobs:
           rustup default stable
 
       - name: Run fmt
+        if: always()
         run: cargo +nightly fmt -- --check
 
       - name: Run clippy
+        if: always()
         run: cargo clippy -- -D warnings
 
       - name: Run tests
+        if: always()
         run: cargo test --verbose
