@@ -5,7 +5,7 @@ edition = "2021"
 description = "A procedural macro crate for Rocket that provides functionality for HTTP deprecation headers."
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/Bentebent/rocket_sunset"
-readme = "README.md"
+readme = "../README.md"
 keywords = ["rocket", "proc-macro", "deprecation", "http", "header"]
 categories = ["web-programming"]
 
