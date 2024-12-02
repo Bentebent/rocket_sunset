@@ -2,7 +2,7 @@
 name = "rocket_sunset_macro"
 version = "0.1.0"
 edition = "2021"
-description = "A procedural macro crate for Rocket that provides functionality for HTTP deprecation headers."
+description = "Internal dependency for the rocket_sunset crate."
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/Bentebent/rocket_sunset"
 readme = "README.md"
