@@ -1,5 +1,9 @@
 # Rocket Sunset
 
+[![Build Status](https://github.com/sd2k/rocket_prometheus/workflows/Rust/badge.svg)](https://github.com/Bentebent/rocket_sunset/actions)
+[![docs.rs](https://docs.rs/rocket_sunset/badge.svg)](https://docs.rs/rocket_sunset)
+[![crates.io](https://img.shields.io/crates/v/rocket_sunset.svg)](https://crates.io/crates/rocket_sunset)
+
 Proc macros for handling HTTP deprecation headers for Rocket applications. Based on the draft proposal [The Deprecation HTTP Header Field](https://github.com/ietf-wg-httpapi/deprecation-header).
 
 ## Usage
