@@ -7,7 +7,7 @@ use rocket::{
     },
     Request,
 };
-pub use sunset_macro::deprecation;
+pub use rocket_sunset_macro::deprecation;
 
 pub struct DeprecatedResponder<T: for<'r> Responder<'r, 'static>> {
     pub inner: T,
