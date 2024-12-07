@@ -63,6 +63,7 @@ This will wrap your endpoint response in a DeprecatedResponder that adds HTTP he
 
 ## TODO
 
+- [ ] Improve macro hygiene with better struct naming and namespacing
 - [x] Deprecation proc macro support
 - [ ] Sunset proc macro support (automatically disable endpoints past sunset timestamp)
 - [ ] Documentation
