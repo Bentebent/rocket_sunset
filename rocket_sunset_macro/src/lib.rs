@@ -87,32 +87,30 @@ impl Parse for DeprecationMacroInput {
 
 #[proc_macro_attribute]
 pub fn deprecation(args: proc_macro::TokenStream, input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    let input_fn = parse_macro_input!(input as ItemFn);
+    let args = parse_macro_input!(args as DeprecationMacroInput);
 
-    let ItemFn { attrs, vis, sig, block } = input_fn;
+    let ItemFn { attrs, vis, sig, block } = parse_macro_input!(input as ItemFn);
 
     let fn_name = &sig.ident;
     let fn_args = &sig.inputs;
 
-    let input = parse_macro_input!(args as DeprecationMacroInput);
-
     let output = match &sig.output {
         ReturnType::Type(_, ty) => {
-            quote! { -> DeprecatedResponder<#ty> }
+            quote! { -> ::rocket_sunset::DeprecatedResponder<#ty> }
         }
         ReturnType::Default => {
-            quote! { -> DeprecatedResponder<()> }
+            quote! { -> ::rocket_sunset::DeprecatedResponder<()> }
         }
     };
 
-    let timestamp = input.timestamp;
-    let link = input.link;
-    let sunset = input.sunset;
+    let timestamp = args.timestamp;
+    let link = args.link;
+    let sunset = args.sunset;
 
     let expanded = quote! {
         #(#attrs)*
         #vis fn #fn_name(#fn_args) #output {
-            DeprecatedResponder::new(
+            ::rocket_sunset::DeprecatedResponder::new(
                 #block,
                 #timestamp,
                 #link,
@@ -121,5 +119,5 @@ pub fn deprecation(args: proc_macro::TokenStream, input: proc_macro::TokenStream
         }
     };
 
-    proc_macro::TokenStream::from(expanded)
+    expanded.into()
 }
